@@ -22,4 +22,8 @@ export class TarjetaService {
   saveTarjeta(tarjeta: any): Observable<any> {
     return this.http.post(this.myAppUrl + this.myApiUrl, tarjeta);
   }
+
+  updateTarjeta(id: number, tarjeta: any): Observable<any> {
+    return this.http.put(this.myAppUrl + this.myApiUrl + id, tarjeta);
+  }
 }

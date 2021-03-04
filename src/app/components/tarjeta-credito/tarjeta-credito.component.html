@@ -13,9 +13,9 @@
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="titulo">AGREGAR TARJETA</h5>
+                    <h5 class="titulo">{{ accion | uppercase }} TARJETA</h5>
 
-                    <form [formGroup]="form" (ngSubmit)="agregarTarjeta()">
+                    <form [formGroup]="form" (ngSubmit)="guardarTarjeta()">
                         <div class="input-group input-group-lg mb-3">
                             <span class="input-group-text">
                                 <i class="fas fa-user"
@@ -75,7 +75,7 @@
                                 <td>{{ tarjeta.numeroTarjeta }}</td>
                                 <td>{{ tarjeta.fechaExpiracion }}</td>
                                 <td>
-                                    <i class="far fa-edit text-info"></i>
+                                    <i (click)="editarTarjeta(tarjeta)" class="far fa-edit text-info"></i>
                                 </td>
                                 <td>
                                     <i (click)="eliminarTarjeta(tarjeta.id)" class="far fa-trash-alt text-danger"></i>
