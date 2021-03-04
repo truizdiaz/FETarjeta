@@ -21,6 +21,22 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="titulo">LISTADO DE TARJETAS</h5>
+                    <table class="table">
+                        <tbody>
+                            <tr *ngFor="let tarjeta of listTarjetas">
+                                <td>{{ tarjeta.titular }}</td>
+                                <td>{{ tarjeta.numeroTarjeta }}</td>
+                                <td>{{ tarjeta.fechaExpiracion }}</td>
+                                <td>
+                                    <i class="far fa-edit text-info"></i>
+                                </td>
+                                <td>
+                                    <i class="far fa-trash-alt text-danger"></i>
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
