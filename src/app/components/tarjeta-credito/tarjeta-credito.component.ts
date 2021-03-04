@@ -9,10 +9,7 @@ import { TarjetaService } from 'src/app/services/tarjeta.service';
   styleUrls: ['./tarjeta-credito.component.css']
 })
 export class TarjetaCreditoComponent implements OnInit {
-  listTarjetas: any[] = [
-    { titular: 'Juan Perez', numeroTarjeta: '25252526262', fechaExpiracion: '11/23', cvv: '123' },
-    { titular: 'Miguel Gonzalez', numeroTarjeta: '252526262', fechaExpiracion: '11/24', cvv: '312' },
-  ];
+  listTarjetas: any[] = [];
 
   form: FormGroup;
 
@@ -34,13 +31,13 @@ export class TarjetaCreditoComponent implements OnInit {
   obtenerTarjetas() {
     this._tarjetaService.getListTarjetas().subscribe(data => {
       console.log(data);
+      this.listTarjetas = data;
     }, error => {
       console.log(error);
     })
   }
 
   agregarTarjeta() {
-    console.log(this.form);
 
     const tarjeta: any = {
       titular: this.form.get('titular')?.value,
@@ -48,14 +45,24 @@ export class TarjetaCreditoComponent implements OnInit {
       fechaExpiracion: this.form.get('fechaExpiracion')?.value,
       cvv: this.form.get('cvv')?.value,
     }
-    this.listTarjetas.push(tarjeta)
-    this.toastr.success('La tarjeta fue registrada con exito!', 'Tarjeta Registrada');
-    this.form.reset();
+    this._tarjetaService.saveTarjeta(tarjeta).subscribe(data => {
+      this.toastr.success('La tarjeta fue registrada con exito!', 'Tarjeta Registrada');
+      this.obtenerTarjetas();
+      this.form.reset();
+    }, error => {
+      this.toastr.error('Opss.. ocurrio un error','Error')
+      console.log(error);
+    })
   }
 
-  eliminarTarjeta(index: number) {
-    this.listTarjetas.splice(index, 1);
-    this.toastr.error('La tarjeta fue eliminada con exito!','Tarjeta eliminada')
+  eliminarTarjeta(id: number) {
+    this._tarjetaService.deleteTarjeta(id).subscribe(data => {
+      this.toastr.error('La tarjeta fue eliminada con exito!','Tarjeta eliminada');
+      this.obtenerTarjetas();
+    }, error => {
+      console.log(error);
+    })
+
   }
 
 }
